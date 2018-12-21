@@ -12,6 +12,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE TypeFamilies #-}
 -- | Datatypes for reflection of protocol buffer messages.
 module Data.ProtoLens.Message (
     -- * Reflection of Messages
@@ -108,6 +109,7 @@ class Message msg where
 allFields :: Message msg => [FieldDescriptor msg]
 allFields = Map.elems fieldsByTag
 
+-- TODO: represent FieldSet as a Vector too.
 type FieldSet = [TaggedValue]
 
 -- | A description of a specific field of a protocol buffer.
@@ -191,7 +193,6 @@ instance FieldDefault B.ByteString where
 
 instance FieldDefault T.Text where
     fieldDefault = T.empty
-
 
 -- | How a given repeated field is transmitted on the wire format.
 data Packing = Packed | Unpacked

@@ -205,6 +205,9 @@ infixl 1 <--
 stmt :: Exp -> Stmt
 stmt = Syntax.Qualifier ()
 
+letStmt :: [Decl] -> Stmt
+letStmt = Syntax.LetStmt () . Syntax.BDecls ()
+
 type FieldUpdate = Syntax.FieldUpdate ()
 
 fieldUpdate :: QName -> Exp -> FieldUpdate
@@ -353,6 +356,9 @@ tyForAll vars ctx t = Syntax.TyForall () (Just vars)
 
 tyBang :: Type -> Type
 tyBang = Syntax.TyBang () (Syntax.BangedTy ()) (Syntax.NoUnpackPragma ())
+
+tyWildCard :: Type
+tyWildCard = Syntax.TyWildCard () Nothing
 
 -- | Application of a Haskell type or expression to an argument.
 -- For example, to represent @f x y@, you can write
